@@ -10,7 +10,15 @@ endif
 " Load indent files for required languages
 for language in ['stylus', 'pug', 'css', 'javascript', 'html', 'coffee']
   unlet! b:did_indent
-  exe "runtime! indent/".language.".vim"
+
+  if (language == 'html')
+    " Load html5 indentation for html parts
+    exe "runtime! indent/".language.".vim"
+    exe "runtime! " . expand('~/.config/nvim/plugins/repos/github.com/othree/html5.vim/indent/') . language . ".vim"
+  else
+    exe "runtime! indent/".language.".vim"
+  endif
+
   exe "let s:".language."indent = &indentexpr"
 endfor
 
